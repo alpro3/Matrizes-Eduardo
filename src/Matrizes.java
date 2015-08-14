@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Scanner;
 
 
 public class Matrizes {
@@ -106,6 +107,50 @@ public class Matrizes {
 		return res;
 	}
 	
+	public static int[][] palavrasCruzadas(int a[][]){
+		int mat [][]= a;
+		int cont = 1;
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[0].length; j++) {
+				if(a[i][j]==0){
+					if(j-1<0 || a[i][j-1] == -1 ){
+						if(j+1<a[0].length && a[i][j+1]==0){
+							mat[i][j]= cont;
+							cont++;
+						}
+						else if(i-1 < 0 || a[i-1][j] == -1 ){					
+							if(i+1<a.length && a[i+1][j]==0){
+								mat[i][j]= cont;
+								cont++;
+							}
+						}
+					}
+					else if(i-1 < 0 || a[i-1][j] == -1 ){					
+						if(i+1<a.length && a[i+1][j]==0){
+							mat[i][j]= cont;
+							cont++;
+						}
+					}
+				}
+			}
+		}
+		return mat;
+	}
+	
+	public static int custoItinerario(int a[][], String itinerario){
+		int valorItinerario = 0;
+		if(a.length!=a[0].length){
+			System.out.println("A matriz deve ser quadrada!");
+		}
+		else{
+			String cidades[] = itinerario.split("-");
+			for (int i = 0; i < cidades.length-1; i++) {
+				valorItinerario+=a[Integer.parseInt(cidades[i])][Integer.parseInt(cidades[i+1])];
+			}			
+		}
+		return valorItinerario;
+	}
+	
 	public static void main(String[] args) {
 		matrizSomaCoordenadas(5, 6);
 		int matA [][] = {{0,1,2},{3,4,5},{6,7,8}};
@@ -130,6 +175,21 @@ public class Matrizes {
 		for (int i = 0; i < vet.length; i++) {
 			System.out.print(vet[i]+" ");
 		}
-		
+		System.out.println("\n");
+		System.out.println("Palavras cruzadas:");
+		System.out.println("");
+		int palavraCruzada[][] = {{0,-1,0,-1,-1,0,-1,0},{0,0,0,0,-1,0,0,0},{0,0,-1,-1,0,0,-1,0},{-1,0,0,0,0,-1,0,0},{0,0,-1,0,0,0,-1,-1}};
+		printMatrizBidimencional(palavraCruzada);
+		System.out.println("");
+		System.out.println("Resposta palavras cruzadas:");
+		System.out.println("");
+		printMatrizBidimencional(palavrasCruzadas(palavraCruzada));
+		int cidades[][] = {{4,1,2,3},{5,2,1,400},{2,1,3,8},{7,1,2,5}};
+		System.out.println("");
+		System.out.println("Matriz das cidades:");
+		System.out.println("");
+		printMatrizBidimencional(cidades);
+		System.out.println("");
+		System.out.println("Custo para o itinerario 0-3-1-3-3-2-1-0: " + custoItinerario(cidades, "0-3-1-3-3-2-1-0"));
 	}
 }
