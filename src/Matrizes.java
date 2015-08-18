@@ -151,6 +151,62 @@ public class Matrizes {
 		return valorItinerario;
 	}
 	
+	public static void tabuleiroDama(int a[][]){
+		ArrayList<Integer> listaPodeComer = new ArrayList<Integer>();
+		ArrayList<Integer> listaMoveSemComer = new ArrayList<Integer>();
+		ArrayList<Integer> listaNaoPodeMover = new ArrayList<Integer>();
+		for (int i = 0; i < a.length; i++) {
+			for (int j = 0; j < a[0].length; j++) {
+				if(a[i][j]==-1){
+					boolean podeComer = false;
+					boolean podeAndarSemComer = false;
+					if(i+1<=7 && j+1<=7 && a[i+1][j+1]==1){
+						if(i+2<=7 && j+2<=7 && a[i+2][j+2]==0){
+							podeComer = true;
+						}
+					}
+					if(podeComer==false && i+1<=7 && j-1>=0 && a[i+1][j-1]==1){
+						if(i+2<=7 && j-2>=0 && a[i+2][j-2]==0){
+							podeComer = true;
+						}
+					}
+					if(podeComer==false && podeAndarSemComer==false && i+1<=7 && j+1<=7 && a[i+1][j+1]==0){
+						podeAndarSemComer = true;
+					}
+					if(podeComer==false && podeAndarSemComer==false && i+1<=7 && j-1>=0 && a[i+1][j-1]==0){
+						podeAndarSemComer=true;
+					}
+					if(podeComer==true){
+						listaPodeComer.add(i);;
+						listaPodeComer.add(j);
+					}if(podeAndarSemComer==true){
+						listaMoveSemComer.add(i);;
+						listaMoveSemComer.add(j);
+					}
+					else if(podeAndarSemComer==false && podeComer==false){
+						listaNaoPodeMover.add(i);
+						listaNaoPodeMover.add(j);
+					}
+				}
+			}
+		}
+		String var = "Pode come: ";
+		for (int i = 0; i < listaPodeComer.size()-1; i+=2) {
+			var+="["+listaPodeComer.get(i)+","+listaPodeComer.get(i+1)+"]";
+		}
+		System.out.println(var);
+		var = "Move sem comer: ";
+		for (int i = 0; i < listaMoveSemComer.size()-1; i+=2) {
+			var+="["+listaMoveSemComer.get(i)+","+listaMoveSemComer.get(i+1)+"]";
+		}
+		System.out.println(var);
+		var = "Não pode mover: ";
+		for (int i = 0; i < listaNaoPodeMover.size()-1; i+=2) {
+			var+="["+listaNaoPodeMover.get(i)+","+listaNaoPodeMover.get(i+1)+"]";
+		}
+		System.out.println(var);
+	} 
+	
 	public static void main(String[] args) {
 		matrizSomaCoordenadas(5, 6);
 		int matA [][] = {{0,1,2},{3,4,5},{6,7,8}};
@@ -177,19 +233,25 @@ public class Matrizes {
 		}
 		System.out.println("\n");
 		System.out.println("Palavras cruzadas:");
-		System.out.println("");
+		System.out.println();
 		int palavraCruzada[][] = {{0,-1,0,-1,-1,0,-1,0},{0,0,0,0,-1,0,0,0},{0,0,-1,-1,0,0,-1,0},{-1,0,0,0,0,-1,0,0},{0,0,-1,0,0,0,-1,-1}};
 		printMatrizBidimencional(palavraCruzada);
-		System.out.println("");
+		System.out.println();
 		System.out.println("Resposta palavras cruzadas:");
-		System.out.println("");
+		System.out.println();
 		printMatrizBidimencional(palavrasCruzadas(palavraCruzada));
 		int cidades[][] = {{4,1,2,3},{5,2,1,400},{2,1,3,8},{7,1,2,5}};
-		System.out.println("");
+		System.out.println();
 		System.out.println("Matriz das cidades:");
-		System.out.println("");
+		System.out.println();
 		printMatrizBidimencional(cidades);
-		System.out.println("");
+		System.out.println();
 		System.out.println("Custo para o itinerario 0-3-1-3-3-2-1-0: " + custoItinerario(cidades, "0-3-1-3-3-2-1-0"));
+		int dama[][] = {{0,-1,0,-1,0,-1,0,-1},{-1,0,-1,0,-1,0,-1,0},{0,0,0,-1,0,-1,0,0},{0,0,-1,0,0,0,-1,0},{0,0,0,1,0,1,0,0},{1,0,1,0,0,0,0,0},{0,1,0,1,0,1,0,1},{1,0,1,0,1,0,1,0}};
+		System.out.println("\nMatriz Dama:\n");
+		printMatrizBidimencional(dama);
+		System.out.println();
+		tabuleiroDama(dama);
+		
 	}
 }
